@@ -7,6 +7,8 @@ public abstract class Item implements Comparable<Item> {
 	private String name;
 	private boolean available = true;
 
+	private Person checkedOutBy;
+
 	public Item(String name) {
 		super();
 		this.name = name;
@@ -30,6 +32,14 @@ public abstract class Item implements Comparable<Item> {
 
 	public void setAvailable(boolean available) {
 		this.available = available;
+	}
+
+	public Person getCheckedOutBy() {
+		return checkedOutBy;
+	}
+
+	public void setCheckedOutBy(Person checkedOutBy) {
+		this.checkedOutBy = checkedOutBy;
 	}
 
 	@Override

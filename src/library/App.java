@@ -35,8 +35,8 @@ public class App {
 
 		System.out.println(lib);
 
-		lib.checkOutItem(1);
-		lib.checkOutItem(1);
+		lib.checkOutItem(1, 1);
+		lib.checkOutItem(1, 1);
 
 		System.out.println(lib);
 

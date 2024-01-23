@@ -20,27 +20,52 @@ public class Library {
 		return available;
 	}
 
-	public void checkOutItem(String name) {
+	private Person getPerson(int id) {
+		for (Person p : patrons) {
+			if (id == p.getId()) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public void checkOutItem(String name, int personId) {
+		Person patron = getPerson(personId);
+		if (patron == null) {
+			System.out.println("No account with id: " + personId);
+			return;
+		}
 		for (Item item : items) {
 			if (item.getName().equals(name)) {
 				if (!item.isAvailable()) {
 					continue;
 				}
+				patron.checkOut(item);
 				item.setAvailable(false);
+				item.setCheckedOutBy(patron);
+
 				return;
 			}
 		}
 		System.out.println("No available item found with name: " + name);
 	}
 
-	public void checkOutItem(int id) {
+	public void checkOutItem(int id, int personId) {
+		Person patron = getPerson(personId);
+		if (patron == null) {
+			System.out.println("No account with id: " + personId);
+			return;
+		}
+
 		for (Item item : items) {
 			if (item.getId() == id) {
 				if (!item.isAvailable()) {
 					System.out.println("Item already checked out");
 					return;
 				}
+				patron.checkOut(item);
 				item.setAvailable(false);
+				item.setCheckedOutBy(patron);
 				return;
 			}
 		}
@@ -51,6 +76,8 @@ public class Library {
 		for (Item item : items) {
 			if (item.getId() == id) {
 				item.setAvailable(true);
+				item.getCheckedOutBy().returnItem(item);
+				item.setCheckedOutBy(null);
 				return;
 			}
 		}
